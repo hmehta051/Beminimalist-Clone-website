@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Page</title>
+    <link rel="stylesheet" href="knowledge.css">
+</head>
+
+<body>
+    <div id="container">
+
+        <div id="guides">
+            <h1>Guides - Ingredients you should know</h1>
+            <div class="guidesimg" id="guidesimg"></div>
+            <button id="guidbtn">View More</button>
+        </div>
+        <div id="skin">
+            <h1>Skincare - Words of wisdom   </h1>
+        <div  class="guidesimg" id="skincare"></div>
+    </div>
+
+    </div>
+</body>
+</html>
+
+<script type="module">
+
+    import kdata from "/data/data.js"
+
+   let kdataarr = kdata();
+   kdataarr = JSON.parse(kdataarr);
+   let guideddata = kdataarr.slice(19,25);
+   import append from "/components/show.js";
+   let guided = document.getElementById("guidesimg");
+
+   append(guideddata,guided);
+
+   let skincaredata = document.getElementById("skincare");
+   append(kdataarr,skincaredata);
+
+   guidbtn = document.getElementById("guidbtn").addEventListener("click",()=>{
+    window.location.href = "viewmore.html"
+   });
+     
+
+
+   
+
+</script>

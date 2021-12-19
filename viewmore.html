@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="viewmore.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="container">
+        <div id="sort">
+            <h2>Guide</h2>
+            <select  id="select">
+                <option value="all">All</option>
+                <option value="Acne">Acne</option>
+                <option value="Anti-aging">Anti-aging</option>
+                <option value="Anti-inflammatory">Anti-inflammatory</option>
+                <option value="Anti-Oxident">Anti-Oxident</option>
+                <option value="Coloidal-Oatmeal">Coloidal-Oatmeal</option>
+                <option value="Hydration">Hydration</option>
+                <option value="Inflamation">Inflamation</option>
+                <option value="Moisturizer">Moisturizer</option>
+                <option value="Peptides">Peptides</option>
+               
+            </select>
+        </div>
+        <div id="data_div"></div>
+    </div>
+    
+</body>
+</html>
+
+<script type="module">
+
+import kdata from "/data/data.js"
+
+let kdataarr = kdata();
+kdataarr = JSON.parse(kdataarr);
+
+let data_div = document.getElementById("data_div");
+
+import appendtwo from "/components/show_two.js"
+console.log(kdataarr)
+
+
+
+let select = document.getElementById("select");
+appendtwo(kdataarr,data_div);
+select.onchange = function(){
+    console.log(select.value)
+    if(select.value=="all"){
+        data_div.innerHTML = null;
+    appendtwo(kdataarr,data_div);
+}else{
+    let filterd = kdataarr.filter((item)=>{
+
+        return item.category==select.value
+
+    });
+    data_div.innerHTML = null;
+    appendtwo(filterd,data_div);
+
+}
+}
+
+
+
+
+
+
+</script>

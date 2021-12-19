@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/chatbot1.css">
+    <title>Chatbot1</title>
+</head>
+<body onload="start()">
+    <div class="inter-app">
+        <div class="head">
+            <div class="leftarr">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="sender">
+                <div class="img">
+                    <img src="image/profile.jpg" alt="Akanksha Profile" class="imgp">
+                </div>
+                <div class="textimg">
+                    <div class="text1">Akanksha</div>
+                    <div class="text1 text2"><i class="fas fa-circle"></i>Active</div>
+                    <input type="text" id="currentDateTime">
+                </div>
+            </div>
+            
+        </div>
+        <div class="mid">
+            <div id="msg_area">
+                <div id="robot">
+                    <div id="bot"></div>
+                    <h4>Akanksha</h4>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div id="input">
+                <input type="text" placeholder="Write a reply..." id="text">
+                <button id="send">Send <i class="fa fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+</body>
+<script type="text/javascript">
+    function start(){
+        let res_msg=document.createElement('div');
+        res_msg.innerHTML="Hello myself Akanksha,how can i help you?";
+        res_msg.setAttribute('class','left');
+        document.getElementById('msg_area').appendChild(res_msg);
+
+    }
+
+    document.getElementById('send').addEventListener('click',async (e)=>{
+        e.preventDefault();
+        let req=document.getElementById('text').value;
+        if(req==undefined || req=="" || req==null){
+
+        }else{
+            let res="";
+            await axios.get(`https://api.monkedev.com/fun/chat?msg=${req}`).then(data=>{
+                res=JSON.stringify(data.data.response)
+            })
+
+            let msg_req=document.createElement('div');
+            let msg_res=document.createElement('div');
+
+            let Con1=document.createElement('div');
+            let Con2=document.createElement('div');
+
+            Con1.setAttribute("class",'msgCon1');
+            Con2.setAttribute("class",'msgCon2');
+
+            msg_req.innerHTML=req;
+            msg_res.innerHTML=res;
+
+            msg_req.setAttribute('class','right');
+            msg_res.setAttribute('class','left');
+
+            let message=document.getElementById('msg_area');
+            message.appendChild(Con1);
+            message.appendChild(Con2);
+
+            Con1.appendChild(msg_req);
+            Con2.appendChild(msg_res);
+
+            document.getElementById('text').value="";
+
+            function scroll(){
+                var scrollMsg=document.getElementById('msg_area');
+                scrollMsg.scrollTop=scrollMsg.scrollHeight
+;            }
+scroll();
+        }
+
+    });
+
+    var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
+  document.getElementById("currentDateTime").value = dateTime;
+
+  let leftarr=document.querySelector('.leftarr');
+  leftarr.addEventListener('click',backfirstpage);
+  function backfirstpage(e){
+      e.preventDefault();
+      window.location.href='chatbot.html'
+  }
+</script>
+</html>

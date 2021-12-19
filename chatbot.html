@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/chatbot.css">
+    <title>Chatbot</title>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="inter-app">
+        <div class="head">
+            <div class="head1">
+                <div class="head2">
+                    <div class="header">
+                       <span>Hi there 👋
+                    </span>
+                    </div>
+                    <div class="header2">
+                        <span>Ask us anything, or share your feedback.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mid">
+            <div class="mid1">
+                <div class="flexx">
+                    <div class="midtext1">
+                        <span>Continue the conversation</span>
+                    </div>
+                    <div class="midtext2 midtext3">
+                        <div class="png">
+                            <div class="png1">
+                                <img src="image/profile.jpg" alt="" class="picsupport">
+                            </div>
+                        </div>
+                        <div class="activeppl">
+                            <div class="nameak">
+                                <span>Akanksha</span>
+                                <span>• 1d ago</span>
+                            </div>
+                            <div class="convo">
+                                <span>Operator: </span>
+                                <span>Rate your conversation</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mid2">
+                <div class="midppl1">
+                    <div class="convotext">
+                        <span>Start another conversation</span>
+                    </div>
+                    <div class="midtext2">
+                        <div class="jpeg">
+                            <div class="jpeg1">
+                                <img src="image/convo.PNG" alt="" class="imgconvo">
+                            </div>
+                        </div>
+                        <div class="mintext">
+                            <!-- <div></div>
+                            <div>
+                                <div>
+                                    <img src="" alt="">
+                                </div>
+                                <div></div>
+                            </div> -->
+                            <div class="nameak">
+                                <span class="usual">Our usual reply time</span>
+                            </div>
+                            <div class="convo">
+                                <span><i class="far fa-clock"></i></span>
+                                <span class="fa-text">A few minutes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="msg">
+                        <div class="msg1">
+                            <span>
+                                <i class="fas fa-location-arrow"></i>
+                            </span>
+                            <span id="msg11">Send us a message</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="intercom">
+                <div class="img-int">
+                    <img src="image/Capture.PNG" alt="" class="img">
+                </div>
+                <div class="img-text"><div id="textimg">We run on intercom</div></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    let midtext3=document.querySelector('.midtext3');
+    midtext3.addEventListener('click',chatpage);
+    let msg1=document.querySelector('.msg1');
+    msg1.addEventListener('click',chatpage);
+    function chatpage(e){
+        e.preventDefault();
+        window.location.href='chatbot1.html'
+    }
+
+    let intercom=document.querySelector('.intercom');
+    intercom.addEventListener('click',interCom);
+    function interCom(e){
+        e.preventDefault();
+        window.location.href='https://www.intercom.com/intercom-link?user_id=61b778981662361a97037660&powered_by_app_id=a311ctl3&company=Minimalist&solution=live-chat&utm_content=4+home-screen+we-run-on-intercom&utm_source=desktop-web&utm_medium=messenger&utm_campaign=intercom-link&utm_referrer=nullblank'
+    }
+</script>

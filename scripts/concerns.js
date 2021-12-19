@@ -3,6 +3,9 @@
        document.getElementById("pic").style.height="70%";
        document.getElementById("pic").style.margin="5% 5% 5% 5%";
     };
+    document.getElementById('viewpdt').addEventListener('click',()=>{
+       window.location.href = "product.html";
+    })
     let count=0;
      document.getElementById("firstbtn").addEventListener("click",function(){
          count++;

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>signup</title>
+    <link
+      rel="shortcut icon"
+      type="image"
+      href="components/images/WhatsApp Image 2021-12-19 at 6.38.10 PM.jpeg"
+    />
+    <link rel="stylesheet" href="styles/signup.css" />
+    <link rel="stylesheet" href="components/template.css" />
+
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="navbar"></div>
+    <div id="signup">
+      <h1>Create Account</h1>
+      <br />
+      <div id="popup">
+        <ul>
+          <li>
+            This email address is already associated with an account. If this
+            account is yours, you can <a href=""> reset your password</a>
+          </li>
+        </ul>
+      </div>
+      <h4>FIRST NAME</h4>
+      <input type="text" id="first" required />
+      <h4>LAST NAME</h4>
+      <input type="text" id="last" required />
+      <h4>EMAIL</h4>
+      <input type="email" id="email" required />
+      <h4>PASSWORD</h4>
+      <input type="password" id="password" required />
+      <button id="create" onclick="signup()">Create</button>
+    </div>
+    <footer></footer>
+  </body>
+</html>
+<script src="scripts/signup.js"></script>
+<script type="module">
+  import {
+    navwithouttop,
+    footer,
+    navfunction,
+    searchanimation,
+  } from "../components/script.js";
+  document.querySelector(".navbar").innerHTML = navwithouttop();
+  let foot = document.querySelector("footer");
+  foot.innerHTML = footer();
+  navfunction();
+  searchanimation();
+</script>

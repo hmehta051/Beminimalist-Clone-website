@@ -1,3 +1,4 @@
+
 function getData(obj){
     var obj=JSON.parse(obj);
     console.log(obj)

@@ -37,7 +37,7 @@ body("password").isLength({min:3}).withMessage("Enter a strong password"),
           return res.render("login",{obj,user});
         }
 
-        return res.status(201).redirect("/home");
+        return res.status(201).redirect("/");
       } 
       catch(err){
         return res.status(500).send({ message: err.message });

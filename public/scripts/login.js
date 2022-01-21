@@ -6,3 +6,4 @@ function getData(obj){
   popup.style.display="block"; 
   }            
   }
+

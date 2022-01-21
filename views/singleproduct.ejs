@@ -233,6 +233,7 @@
 
   let pro = [];
   pro.push({});
+  pro[0].id = "<%=products._id %>";
   pro[0].title = "<%=products.title%>";
   pro[0].reviews = "<%=products.reviews%>";
   pro[0].desc = "<%=products.desc%>";
@@ -240,11 +241,13 @@
   pro[0].dprice = "<%=products.dprice%>";
   pro[0].category = "<%=products.category%>";
   pro[0].url = "<%=products.url%>";
+  pro[0].quantity = "<%=products.quantity%>";
   pro = pro[0];
-  let cartitems = JSON.parse(localStorage.getItem("cartitems")) || [];
+  console.log(pro);
   let maindiv2 = document.querySelector(".display-product");
   var counter = 0;
   const appenditem = ({
+    id,
     title,
     url,
     reviews,
@@ -252,6 +255,7 @@
     tprice,
     dprice,
     category,
+    quantity,
   }) => {
     let imgdiv = document.createElement("div");
     imgdiv.setAttribute("class", "imgdiv");
@@ -333,18 +337,32 @@
       pro.quantity = counter;
     });
     quantitydiv.append(min, num, max);
-    let cartbtn = document.createElement("button");
-    cartbtn.textContent = "Add to Cart";
-    cartbtn.addEventListener("click", async () => {
-      cartitems.push(pro);
-      localStorage.setItem("cartitems", JSON.stringify(cartitems));
-      if (cartitems.length > 0) {
-        document.getElementById("indicator").style.display = "block";
-      } else {
-        document.getElementById("indicator").style.display = "none";
-      }
+    let form = document.createElement("form");
+    form.setAttribute("action", "/addtocart");
+    form.setAttribute("method", "POST");
+    let hiddeninput = document.createElement("input");
+    hiddeninput.type = "hidden";
+    hiddeninput.name = "id";
+    hiddeninput.value = id;
+    let subbtn = document.createElement("button");
+    subbtn.type = "submit";
+    subbtn.textContent = "Add to Cart";
+    subbtn.addEventListener("click", () => {
+      console.log(pro);
     });
-    btndiv.append(quantitydiv, cartbtn);
+    form.append(hiddeninput, subbtn);
+    // let cartbtn = document.createElement("button");
+    // cartbtn.textContent = "Add to Cart";
+    // cartbtn.addEventListener("click", async () => {
+    //   cartitems.push(pro);
+    //   localStorage.setItem("cartitems", JSON.stringify(cartitems));
+    //   if (cartitems.length > 0) {
+    //     document.getElementById("indicator").style.display = "block";
+    //   } else {
+    //     document.getElementById("indicator").style.display = "none";
+    //   }
+    // });
+    btndiv.append(quantitydiv, form);
     contentdiv.append(maininfo, btndiv);
 
     let sideinfo = document.createElement("div");

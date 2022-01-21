@@ -74,7 +74,7 @@
   padding: 10px;
   box-sizing: border-box;
 }
-.btndiv > button {
+form > button[type="submit"] {
   width: fit-content;
   padding: 10px 50px;
   box-sizing: border-box;

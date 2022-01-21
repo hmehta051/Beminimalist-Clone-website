@@ -13,9 +13,8 @@ async function append(data,location){
         let p = document.createElement("p");
         p.textContent = "Read more"
         p.addEventListener("click",()=>{
-
-            localStorage.setItem("single_Data",JSON.stringify(el));
-            window.location.href = "article.html"
+            console.log(el.id);
+            window.location.href = `/knowledge/${el.id}`
 
         })
         div.append(img,h2,p);

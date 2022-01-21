@@ -223,7 +223,7 @@ const checkoutpage = (value) => {
 };
 
 
-const productappend = (products,bestseller,cart)=>{
+const productappend = (products,bestseller)=>{
   products.map((items) => {
     let itembox = document.createElement("div");
     itembox.setAttribute("class", "itembox");
@@ -254,11 +254,11 @@ const productappend = (products,bestseller,cart)=>{
     let btndiv = document.createElement("button");
     items.quantity = 1;
     btndiv.textContent = "Add to cart";
-    btndiv.addEventListener("click", () => {
-      cart.push(items);
-      localStorage.setItem("cartitems", JSON.stringify(cart));
-      console.log(items);
-    });
+    // btndiv.addEventListener("click", () => {
+    //   cart.push(items);
+    //   localStorage.setItem("cartitems", JSON.stringify(cart));
+    //   console.log(items);
+    // });
     itembox.append(itemimgdiv, itemcontentdiv,btndiv);
     bestseller.append(itembox);
   });

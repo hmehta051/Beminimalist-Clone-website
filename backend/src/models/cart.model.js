@@ -1,17 +1,25 @@
-const mongoose = require('mongoose');
+let user_cart = null;
 
-const cartSchema = new mongoose.Schema({
-    user_id: {type: mongoose.Schema.Types.ObjectId, ref: "user", required: true},
-    category: {type: String, required: true},
-    desc: {type: String, required: true},
-    dprice: {type: Number, required: true},
-    tprice: {type: Number, required: true},
-    quantity: {type: String, required: true},
-    reviews: {type: Number, required: true},
-    url: {type: String, required: true}
-},{
-    versionKey: false,
-    timestamps: true,
-});
-
-module.exports = mongoose.model("cart",cartSchema);
+module.exports = class Cart {
+    static save(product){
+        console.log(product);
+        if (user_cart){
+            const existingprodIndex = user_cart.products.findIndex( p => p.id == product.id);
+            console.log("existingprodIndex:",existingprodIndex);
+            if (existingprodIndex == 0){
+                user_cart.products[existingprodIndex];
+                user_cart.total_price = (existingprodIndex.dprice);
+            }else {
+                user_cart.products.push(product);
+                user_cart.total_price += product.dprice;
+            }
+        }else {
+            user_cart = { products: [] , total_price: 0};
+            user_cart.products.push(product);
+            user_cart.total_price = product.dprice;
+        }
+    }
+    static getCart(){
+        return user_cart;
+    }
+}

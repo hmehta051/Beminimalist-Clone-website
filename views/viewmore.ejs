@@ -60,25 +60,30 @@
   document.querySelector("footer").innerHTML = footer();
   navfunction();
   searchanimation();
-  import kdata from "/scripts/data.js";
-
-  let kdataarr = kdata();
-  kdataarr = JSON.parse(kdataarr);
 
   let data_div = document.getElementById("data_div");
-
+  let articles = [];
+  ("<% blogs.forEach((item,i)=>{%>");
+  ("<% if (i < 19) { %>");
+  articles.push({});
+  articles["<%=i%>"].id = "<%=item._id%>";
+  articles["<%=i%>"].title = "<%=item.title%>";
+  articles["<%=i%>"].category = "<%=item.category%>";
+  articles["<%=i%>"].url = "<%=item.url%>";
+  ("<%}%>");
+  ("<%})%>");
   import appendtwo from "/scripts/show_two.js";
-  console.log(kdataarr);
+  console.log(articles);
 
   let select = document.getElementById("select");
-  appendtwo(kdataarr, data_div);
+  appendtwo(articles, data_div);
   select.onchange = function () {
     console.log(select.value);
     if (select.value == "all") {
       data_div.innerHTML = null;
-      appendtwo(kdataarr, data_div);
+      appendtwo(articles, data_div);
     } else {
-      let filterd = kdataarr.filter((item) => {
+      let filterd = articles.filter((item) => {
         return item.category == select.value;
       });
       data_div.innerHTML = null;

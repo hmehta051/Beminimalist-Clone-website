@@ -23,10 +23,7 @@ async function append_two(data,location){
         let p = document.createElement("button");
         p.textContent = "Continue reading"
         p.addEventListener("click",()=>{
-
-            localStorage.setItem("single_Data",JSON.stringify(el));
-            window.location.href = "article.html"
-
+            window.location.href = `/viewmore/${el.id}`
         })
         divtwo.append(date,h2,p)
         div.append(img,divtwo);

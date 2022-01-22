@@ -16,6 +16,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    token: {type: String, required:false},
     cart: {
         items: [{
             productId: {
@@ -28,7 +29,7 @@ const userSchema = new Schema({
                 required: true
             }
         }],
-        totalPrice: Number
+        totalPrice: {type: Number, required: false}
     }
 },{
   versionKey: false,
@@ -45,32 +46,6 @@ userSchema.methods.checkPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-userSchema.methods.addToCart = async function(productId) {
-    const product = await Product.findById(productId);
-    if (product) {
-        const cart = this.cart;
-        const isExisting = cart.items.findIndex(objInItems => new String(objInItems.productId).trim() === new String(product._id).trim());
-        if (isExisting >= 0) {
-            cart.items[isExisting].qty += 1;
-        } else {
-            cart.items.push({ productId: product._id, qty: 1 });
-        }
-        if (!cart.totalPrice) {
-            cart.totalPrice = 0;
-        }
-        cart.totalPrice += product.price;
-        return this.save();
-    }
 
-};
-
-userSchema.methods.removeFromCart = function(productId) {
-    const cart = this.cart;
-    const isExisting = cart.items.findIndex(objInItems => new String(objInItems.productId).trim() === new String(productId).trim());
-    if (isExisting >= 0) {
-        cart.items.splice(isExisting, 1);
-        return this.save();
-    }
-}
 
 module.exports = mongoose.model('User', userSchema);

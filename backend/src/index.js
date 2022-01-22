@@ -17,13 +17,13 @@ app.use(express.urlencoded({extended:true}));
 // app.use( bodyParser.json() 
 app.set("view engine","ejs")
 app.use(express.static("public"))
+app.use("/",viewscontroller);
 app.use("/knowledge",blogController);
 app.use("/viewmore",articleController);
 app.use("/products",productController);
 app.use("/signup", signupcontroller);
 app.use("/login",logincontroller);
-app.use("/",cartController);
-app.use("/",viewscontroller);
+app.use("/cart",cartController);
 
 //-------passport---------
 app.use(passport.initialize());

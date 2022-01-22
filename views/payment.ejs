@@ -131,16 +131,15 @@
 </html>
 <script type="module">
   import { appenditems, checkoutpage } from "/scripts/script.js";
-  let cart = JSON.parse(localStorage.getItem("cartitems"));
+  let cart = JSON.parse(localStorage.getItem("store"));
   let container = document.querySelector(".container");
   container.innerHTML = checkoutpage("Complete Order");
   let maindiv = document.querySelector(".showcart");
   appenditems(cart, maindiv);
   document.querySelector(".return").addEventListener("click", () => {
-    window.location.href = "cart.html";
+    window.location.href = "/cart";
   });
   let data = JSON.parse(localStorage.getItem("orderinfo"));
-  console.log(data);
   let template = document.querySelector(".verifybox");
   template.innerHTML = `<div class="before-payment">
         <div class="info">
@@ -149,21 +148,21 @@
               <p>Contact</p>
               <p>${data.email}</p>
             </div>
-            <div><a href="checkout.html">Change</a></div>
+            <div><a href="/checkout">Change</a></div>
           </div>
           <div class="address-info">
             <div class="address">
               <p>Ship to</p>
               <p>${data.address}</p>
             </div>
-            <div><a href="checkout.html">Change</a></div>
+            <div><a href="/checkout">Change</a></div>
           </div>
           <div class="address-info">
             <div class="address">
               <p>Method</p>
               <p>Prepaid-Net banking, UPI .Free</p>
             </div>
-            <div><a href="verification.html">Change</a></div>
+            <div><a href="/verification">Change</a></div>
           </div>
         </div>
         <div class="mini-container">
@@ -204,9 +203,9 @@
       </div>`;
 
   document.querySelector(".return").addEventListener("click", () => {
-    window.location.href = "verification.html";
+    window.location.href = "/verification";
   });
   document.querySelector(".btndiv > button").addEventListener("click", () => {
-    window.location.href = "product.html";
+    window.location.href = "/products";
   });
 </script>

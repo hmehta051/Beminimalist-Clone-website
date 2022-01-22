@@ -23,8 +23,17 @@ router.get("/concerns",(req,res)=>{
 // router.get("/login",(req,res)=>{
 //     res.render("login.ejs");
 // });
-router.get("/cart",(req,res)=>{
-    res.render("cart.ejs");
+// router.get("/cart",(req,res)=>{
+//     res.render("cart.ejs");
+// });
+router.get("/verification",(req,res)=>{
+    res.render("verification.ejs");
+});
+router.get("/checkout",(req,res)=>{
+    res.render("checkout.ejs");
+});
+router.get("/payment",(req,res)=>{
+    res.render("payment.ejs");
 });
 // router.get("/signup",(req,res)=>{
 //     res.render("signup.ejs");

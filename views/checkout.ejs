@@ -202,12 +202,13 @@
 </html>
 <script type="module">
   import { appenditems } from "/scripts/script.js";
-  let cart = JSON.parse(localStorage.getItem("cartitems"));
+  let store = JSON.parse(localStorage.getItem("store"));
+  console.log(store);
   let maindiv = document.querySelector(".showcart");
 
-  appenditems(cart, maindiv);
+  appenditems(store, maindiv);
   document.querySelector(".return").addEventListener("click", () => {
-    window.location.href = "cart.html";
+    window.location.href = "/cart";
   });
   document.querySelector(".btndiv > button").addEventListener("click", () => {
     const data = {
@@ -215,6 +216,6 @@
       address: document.getElementById("address").value,
     };
     localStorage.setItem("orderinfo", JSON.stringify(data));
-    window.location.href = "verification.html";
+    window.location.href = "/verification";
   });
 </script>

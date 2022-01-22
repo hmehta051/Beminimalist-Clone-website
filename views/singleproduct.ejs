@@ -243,6 +243,7 @@
   pro[0].url = "<%=products.url%>";
   pro[0].quantity = "<%=products.quantity%>";
   pro = pro[0];
+  pro.quantity = Number(pro.quantity);
   console.log(pro);
   let maindiv2 = document.querySelector(".display-product");
   var counter = 0;
@@ -338,7 +339,7 @@
     });
     quantitydiv.append(min, num, max);
     let form = document.createElement("form");
-    form.setAttribute("action", "/addtocart");
+    form.setAttribute("action", "/cart/addtocart");
     form.setAttribute("method", "POST");
     let hiddeninput = document.createElement("input");
     hiddeninput.type = "hidden";
@@ -347,21 +348,7 @@
     let subbtn = document.createElement("button");
     subbtn.type = "submit";
     subbtn.textContent = "Add to Cart";
-    subbtn.addEventListener("click", () => {
-      console.log(pro);
-    });
     form.append(hiddeninput, subbtn);
-    // let cartbtn = document.createElement("button");
-    // cartbtn.textContent = "Add to Cart";
-    // cartbtn.addEventListener("click", async () => {
-    //   cartitems.push(pro);
-    //   localStorage.setItem("cartitems", JSON.stringify(cartitems));
-    //   if (cartitems.length > 0) {
-    //     document.getElementById("indicator").style.display = "block";
-    //   } else {
-    //     document.getElementById("indicator").style.display = "none";
-    //   }
-    // });
     btndiv.append(quantitydiv, form);
     contentdiv.append(maininfo, btndiv);
 

@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const User = require("../models/user.model");
+const jwt = require("jsonwebtoken");
+const newToken = (user) => {
+  return jwt.sign({ user: user }, process.env.JWT_SECRET_KEY)
+};
 
 router.get("", async (req, res) => {
   try {
@@ -33,7 +37,9 @@ body("password").isLength({min:3}).withMessage("Enter a strong password"),
           return res.render("signup",{obj,user});
         }
         user = await User.create(req.body);  
-        
+        const user_token = newToken(user);
+        user = await User.findOne({email: req.body.email});
+        user.token = user_token;
         return res.status(201).redirect("/login");
       } catch (err) {
         return res.status(500).send({ message: err.message });
@@ -41,3 +47,4 @@ body("password").isLength({min:3}).withMessage("Enter a strong password"),
 );
 
 module.exports = router;
+

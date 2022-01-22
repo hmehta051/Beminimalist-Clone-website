@@ -1,50 +1,47 @@
 const express = require('express');
 const router = express.Router();
-// const Cart = require('../models/cart.model');
-// const Product = require('../models/product.model');
+const Product = require('../models/product.model');
+const Cart = require('../models/cart.model');
 
-// router.post("/",async(req,res)=>{
-//     const product = await Product.findById(req.body.id).lean().exec();
-//     Cart.save(product);
-//     console.log(Cart.getCart());
-//     // return res.render("cart.ejs",{user_cart: Cart.getCart()});
-//     // res.end("save Successfully");
-// });
-// router.get("/:id",async(req,res)=>{
-//     const cart = await Cart.findById(req.params.id).lean().exec();
-//     return res.status(500).send(cart);
-// })
-// router.delete("/:id",async(req,res)=>{
-//     const cart = await Cart.findByIdAndDelete(req.params.id);
-//     return res.status(500).send(cart);
-// })
-router.post("/addtocart",async(req, res) => {
-    try{
-        console.log(req.user);
-        const cart = await req.user.addToCart(req.body.id);
-        console.log(cart);
-        return res.redirect("/cart");
-    }catch(err){
-        console.log({message: err.message})
+router.post("/addtocart",async(req,res)=>{
+    const product = await Product.findById(req.body.id).lean().exec();
+    const findcart = await Cart.find({product_id: req.body.id}).lean().exec();
+    console.log(findcart);
+    let cart;
+    if (findcart.length > 0){
+        cart = await Cart.findOneAndUpdate({product_id: req.body.id},{
+            product_qty: findcart[0].product_qty+1,
+            total_price: findcart[0].total_price+product.dprice,
+        });
+    }else {
+        cart = await Cart.create({
+            product_id: req.body.id,
+            product_qty: product.quantity,
+            total_price: product.dprice
+        })
     }
+    return res.redirect(`/products/${req.body.id}`);
 })
 
-router.get("/cart",async(req,res)=>{
+router.get("/",async(req,res)=>{
     try{
-        const cart = await req.user.find().populate({path: "cart.items.product_id"}).lean().exec();
-        return res.render("cart",{cart: cart});
+        const cart = await Cart.find().populate({path: "product_id"}).lean().exec();
+        return res.render("cart.ejs",{usercart: cart});
+        // return res.status(201).send({usercart: cart});
     }catch(err){
-        return res.status(500).end({message: err.message})
+        return res.end({message: err.message});
+    }
+});
+
+router.delete("/delete/:id",async(req,res)=>{
+    try{
+        const cart = await Cart.findByIdAndDelete(req.body.id);
+        const scart = await Cart.find().populate({path: "product_id"}).lean().exec();
+        console.log(scart);
+        return res.redirect("cart.ejs",{usercart: cart});
+        // return res.status(201).send({usercart: cart});
+    }catch(err){
+        return res.end({message: err.message});
     }
 })
-
-router.delete("/deletecart",async(req, res) => {
-    try{
-        await req.user.removeFromCart(req.body.prodId)
-    res.redirect("/cart");
-    }catch(err){
-        return res.status(500).end({message: err.message});
-    }
-})
-
 module.exports = router;

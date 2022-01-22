@@ -156,21 +156,21 @@ const appenditems = (cart,maindiv) => {
     let img = document.createElement("img");
     img.src = items.url;
     let count = document.createElement("div");
-    count.textContent = items.quantity;
+    count.textContent = items.qty;
     imgdiv.append(img, count);
     let contentdiv = document.createElement("div");
     contentdiv.setAttribute("class", "contentdiv");
     let name = document.createElement("p");
     name.textContent = items.title;
     let price = document.createElement("p");
-    price.textContent = `₹ ${items.quantity * items.dprice}`;
+    price.textContent = `₹ ${items.prodprice}`;
     contentdiv.append(name, price);
     itemdiv.append(imgdiv, contentdiv);
     maindiv.append(itemdiv);
   });
   var sub = 0;
   for (var i = 0; i < cart.length; i++) {
-    sub += cart[i].quantity * cart[i].dprice;
+    sub += Number(cart[i].prodprice);
   }
   let tax = Math.floor(sub * (5 / 100));
   let subtotal = document.querySelector(".subtotal");

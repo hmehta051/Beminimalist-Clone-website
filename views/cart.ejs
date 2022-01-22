@@ -111,17 +111,11 @@
   }
   let totalprice = sum;
   appendcart(cart);
-
-  // const deleteitem = (index) => {
-  //   cart.splice(index, 1);
-  //   localStorage.setItem("cartitems", JSON.stringify(cart));
-  //   appendcart(cart);
-  // };
-  // if (cart.length > 0) {
-  //   document.getElementById("indicator").style.display = "block";
-  // } else {
-  //   document.getElementById("indicator").style.display = "none";
-  // }
+  if (cart.length > 0) {
+    document.getElementById("indicator").style.display = "block";
+  } else {
+    document.getElementById("indicator").style.display = "none";
+  }
   navfunction();
   searchanimation();
 

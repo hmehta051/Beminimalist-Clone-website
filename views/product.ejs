@@ -260,7 +260,12 @@
   productappend(products, maindiv);
   navfunction();
   searchanimation();
-
+  let cart = JSON.parse(localStorage.getItem("store"));
+  if (cart.length > 0) {
+    document.getElementById("indicator").style.display = "block";
+  } else {
+    document.getElementById("indicator").style.display = "none";
+  }
   let selectionprod = document.getElementById("select");
   selectionprod.addEventListener("change", () => {
     let sort = selectionprod.value;

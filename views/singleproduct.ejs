@@ -223,7 +223,7 @@
   document.querySelector("footer").innerHTML = footer();
 
   let products = items;
-  let cart = JSON.parse(localStorage.getItem("cartitems")) || [];
+  let cart = JSON.parse(localStorage.getItem("store"));
   let itemcontainer = document.querySelector(".product-container");
   itemcontainer.innerHTML = itemstemplate("Other Products you may like");
   let maindiv = document.querySelector(".recent-products");
@@ -415,4 +415,9 @@
     maindiv2.append(imgdiv, contentdiv);
   };
   appenditem(pro);
+  if (cart.length > 0) {
+    document.getElementById("indicator").style.display = "block";
+  } else {
+    document.getElementById("indicator").style.display = "none";
+  }
 </script>

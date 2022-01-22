@@ -1,25 +1,36 @@
-let user_cart = null;
+let cart = null;
 
 module.exports = class Cart {
-    static save(product){
+
+    static save(product) {
+        console.log("-----------------------------------------------")
         console.log(product);
-        if (user_cart){
-            const existingprodIndex = user_cart.products.findIndex( p => p.id == product.id);
-            console.log("existingprodIndex:",existingprodIndex);
-            if (existingprodIndex == 0){
-                user_cart.products[existingprodIndex];
-                user_cart.total_price = (existingprodIndex.dprice);
-            }else {
-                user_cart.products.push(product);
-                user_cart.total_price += product.dprice;
-            }
-        }else {
-            user_cart = { products: [] , total_price: 0};
-            user_cart.products.push(product);
-            user_cart.total_price = product.dprice;
+        console.log("-----------------------------------------------")
+        if (cart === null) {
+            cart = { products: [], totalPrice: 0 };
+        }
+
+        const existingProductIndex = cart.products.findIndex(p => p.id == product.id); // to check product is existing in cart
+        if (existingProductIndex >= 0) { // exist in cart already
+            const exsitingProduct = cart.products[existingProductIndex];
+            exsitingProduct.qty += 1;
+        } else { //not exist
+            product.qty = 1;
+            cart.products.push(product);
+        }
+
+        cart.totalPrice += product.price;
+    }
+
+    static getCart() {
+        return cart;
+    }
+
+    static delete(productId) {
+        const isExisting = cart.products.findIndex(p => p.id == productId);
+        if (isExisting >= 0) {
+            cart.products.splice(isExisting, 1);
         }
     }
-    static getCart(){
-        return user_cart;
-    }
+
 }

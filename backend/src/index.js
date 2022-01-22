@@ -22,7 +22,7 @@ app.use("/viewmore",articleController);
 app.use("/products",productController);
 app.use("/signup", signupcontroller);
 app.use("/login",logincontroller);
-app.use("/addtocart",cartController);
+app.use("/",cartController);
 app.use("/",viewscontroller);
 
 //-------passport---------

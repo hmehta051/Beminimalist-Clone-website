@@ -4,10 +4,10 @@ const navbar = ()=>{
       <p>Get 10% Flat Off. Use Code <span>GET10</span></p>
     </div>
     <nav>
-      <div class="logo">minimalist_</div>
+      <div class="logo"><a href="/">minimalist_</a></div>
       <div class="nav-links">
         <ul>
-          <li><a href="/home">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="/concerns">Concerns</a></li>
           <li><a href="/products">Our Products</a></li>
           <li><a href="/knowledge">Knowledge</a></li>
@@ -25,7 +25,7 @@ const navbar = ()=>{
       <div class="cancel"><i class="fas fa-times"></i></div>
       <div class="links">
         <ul>
-          <li><a href="/home">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="/concerns">Concerns</a></li>
           <li><a href="/products">Our Products</a></li>
           <li><a href="/knowledge">Knowledge</a></li>
@@ -49,7 +49,7 @@ const navbar = ()=>{
 const navwithouttop = ()=>{
   return `<div class="nav-container">
   <nav>
-    <div class="logo">minimalist_</div>
+    <div class="logo"><a href="/">minimalist_</a></div>
     <div class="nav-links">
       <ul>
         <li><a href="/">Home</a></li>

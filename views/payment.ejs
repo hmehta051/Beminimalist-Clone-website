@@ -219,18 +219,12 @@
       key: "rzp_test_U0P80qGYEdLMh4", // Enter the Key ID generated from the Dashboard
       amount: info.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: "INR",
-      name: "hello world",
-      description: "Test Transaction",
-      image: "https://example.com/your_logo",
+      name: "Beminimalist Clone",
+      description: "Test Product Transaction",
+      image:
+        "https://media-exp1.licdn.com/dms/image/C4D0BAQFYlWONcxQ9AQ/company-logo_200_200/0/1610263700629?e=2159024400&v=beta&t=vWiMSI2NRcfxJFlMNKDkzFi3UpLKVhgcyHgM96IKWuU",
       order_id: info.data.id,
       callback_url: "/ordercompleted", //This is a sample Order ID. Pass the `id` obtained in the previous step
-      // "handler": function (response){
-
-      //     alert("payment completed")
-      //     alert(response.razorpay_payment_id);
-      //     alert(response.razorpay_order_id);
-      //     alert(response.razorpay_signature)
-      // },
       prefill: {
         name: "Avish Kumar",
         email: "Avish.kumar@example.com",
@@ -244,16 +238,6 @@
       },
     };
     var rzp1 = new Razorpay(options);
-    // rzp1.on('payment.failed', function (response){
-    //     alert("payment failed");
-    //         alert(response.error.code);
-    //         alert(response.error.description);
-    //         alert(response.error.source);
-    //         alert(response.error.step);
-    //         alert(response.error.reason);
-    //         alert(response.error.metadata.order_id);
-    //         alert(response.error.metadata.payment_id);
-    // });
     document.querySelector(".btndiv > button").onclick = function (e) {
       rzp1.open();
       e.preventDefault();

@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment page</title>
+    <!-- Gateway CDN link -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link
       rel="shortcut icon"
       type="image"
@@ -132,6 +135,11 @@
 <script type="module">
   import { appenditems, checkoutpage } from "/scripts/script.js";
   let cart = JSON.parse(localStorage.getItem("store"));
+  let orderprice = 0;
+  for (let i = 0; i < cart.length; i++) {
+    orderprice += Number(cart[i].prodprice);
+  }
+  console.log(orderprice);
   let container = document.querySelector(".container");
   container.innerHTML = checkoutpage("Complete Order");
   let maindiv = document.querySelector(".showcart");
@@ -205,7 +213,50 @@
   document.querySelector(".return").addEventListener("click", () => {
     window.location.href = "/verification";
   });
-  document.querySelector(".btndiv > button").addEventListener("click", () => {
-    window.location.href = "/products";
+  axios.post(`/order?totalprice=${orderprice}`).then((info) => {
+    console.log("info", info);
+    var options = {
+      key: "rzp_test_U0P80qGYEdLMh4", // Enter the Key ID generated from the Dashboard
+      amount: info.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: "hello world",
+      description: "Test Transaction",
+      image: "https://example.com/your_logo",
+      order_id: info.data.id,
+      callback_url: "/ordercompleted", //This is a sample Order ID. Pass the `id` obtained in the previous step
+      // "handler": function (response){
+
+      //     alert("payment completed")
+      //     alert(response.razorpay_payment_id);
+      //     alert(response.razorpay_order_id);
+      //     alert(response.razorpay_signature)
+      // },
+      prefill: {
+        name: "Avish Kumar",
+        email: "Avish.kumar@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new Razorpay(options);
+    // rzp1.on('payment.failed', function (response){
+    //     alert("payment failed");
+    //         alert(response.error.code);
+    //         alert(response.error.description);
+    //         alert(response.error.source);
+    //         alert(response.error.step);
+    //         alert(response.error.reason);
+    //         alert(response.error.metadata.order_id);
+    //         alert(response.error.metadata.payment_id);
+    // });
+    document.querySelector(".btndiv > button").onclick = function (e) {
+      rzp1.open();
+      e.preventDefault();
+    };
   });
 </script>

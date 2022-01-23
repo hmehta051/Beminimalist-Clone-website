@@ -1,7 +1,7 @@
-
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const Razorpay = require("razorpay");
 const passport = require('./configs/passport');
 const productController = require('./controllers/product.controller');
 const viewscontroller = require('./controllers/views.controllers');
@@ -13,6 +13,7 @@ const articleController = require('./controllers/article.controller');
 app.use(express.json())
 app.use(cors());
 app.use(express.urlencoded({extended:true}));
+
 // app.use( bodyParser.urlencoded({extended : true }));
 // app.use( bodyParser.json() 
 app.set("view engine","ejs")
@@ -54,4 +55,39 @@ app.get(
 app.get("/auth/google/failure", (req, res) => {
   return res.send("Failure");
 });
+
+let orderIdavar;
+
+const razorpay = new Razorpay({
+    key_id:process.env.keyId,
+    key_secret:process.env.key_secret
+})
+app.use(express.urlencoded({extended:false}));
+
+app.get("",async(req,res)=>{
+    res.render(`payment.ejs`)
+})
+app.post("/order",(req,res) =>{
+  let price = +req.query.totalprice
+    let options = {
+        amount: price*100,  // amount in the smallest currency unit
+        currency: "INR",
+        receipt: "order_rcptid_11"
+      }
+
+      razorpay.orders.create(options,function(err,order){
+        orderIdavar = order.id
+          res.json(order) //order sent
+      })
+
+})
+
+app.post("/ordercompleted",(req,res)=>{
+    razorpay.payments.fetch(req.body.razorpay_payment_id).then((paymentDocument)=>{
+        console.log(paymentDocument)
+        if(paymentDocument.status == `captured`) return res.send(`payment successfull `)
+
+        else return  res.send(`payment Failed`)
+    })
+})
 module.exports = app;

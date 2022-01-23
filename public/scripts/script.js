@@ -146,7 +146,7 @@ const footer = ()=>{
     <div class="copyright">© 2021 Minimalist</div>
   </div>`
 }
-
+let orderprice
 const appenditems = (cart,maindiv) => {
   cart.forEach((items) => {
     let itemdiv = document.createElement("div");
@@ -182,10 +182,10 @@ const appenditems = (cart,maindiv) => {
           <p>Estimated Tax</p>
           <p>₹ ${tax}</p>
         </div>`;
-
+        orderprice = sub - tax;
   let totalprice = document.querySelector(".totalbill");
   totalprice.innerHTML = `<p>Total</p>
-        <p><span>INR</span>₹${sub - tax}</p>`;
+        <p><span>INR</span>₹${orderprice}</p>`;
 };
 const checkoutpage = (value) => {
   return `<div class="form">
@@ -229,10 +229,10 @@ const productappend = (products,bestseller)=>{
     itembox.setAttribute("class", "itembox");
     let itemimgdiv = document.createElement("div");
     itemimgdiv.setAttribute("class", "itemimgdiv");
-    itemimgdiv.addEventListener('click',()=>{
-      localStorage.setItem('singleitem',JSON.stringify(items));
-      window.location.href = "singleproduct.html";
-    });
+    // itemimgdiv.addEventListener('click',()=>{
+    //   localStorage.setItem('singleitem',JSON.stringify(items));
+    //   window.location.href = "singleproduct.html";
+    // });
     let itemimg = document.createElement("img");
     itemimg.src = items.url;
     itemimgdiv.append(itemimg);

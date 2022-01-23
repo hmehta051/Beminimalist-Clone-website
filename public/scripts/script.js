@@ -4,10 +4,10 @@ const navbar = ()=>{
       <p>Get 10% Flat Off. Use Code <span>GET10</span></p>
     </div>
     <nav>
-      <div class="logo">minimalist_</div>
+      <div class="logo"><a href="/">minimalist_</a></div>
       <div class="nav-links">
         <ul>
-          <li><a href="/home">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="/concerns">Concerns</a></li>
           <li><a href="/products">Our Products</a></li>
           <li><a href="/knowledge">Knowledge</a></li>
@@ -25,7 +25,7 @@ const navbar = ()=>{
       <div class="cancel"><i class="fas fa-times"></i></div>
       <div class="links">
         <ul>
-          <li><a href="/home">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="/concerns">Concerns</a></li>
           <li><a href="/products">Our Products</a></li>
           <li><a href="/knowledge">Knowledge</a></li>
@@ -49,7 +49,7 @@ const navbar = ()=>{
 const navwithouttop = ()=>{
   return `<div class="nav-container">
   <nav>
-    <div class="logo">minimalist_</div>
+    <div class="logo"><a href="/">minimalist_</a></div>
     <div class="nav-links">
       <ul>
         <li><a href="/">Home</a></li>
@@ -146,7 +146,7 @@ const footer = ()=>{
     <div class="copyright">© 2021 Minimalist</div>
   </div>`
 }
-
+let orderprice
 const appenditems = (cart,maindiv) => {
   cart.forEach((items) => {
     let itemdiv = document.createElement("div");
@@ -156,21 +156,21 @@ const appenditems = (cart,maindiv) => {
     let img = document.createElement("img");
     img.src = items.url;
     let count = document.createElement("div");
-    count.textContent = items.quantity;
+    count.textContent = items.qty;
     imgdiv.append(img, count);
     let contentdiv = document.createElement("div");
     contentdiv.setAttribute("class", "contentdiv");
     let name = document.createElement("p");
     name.textContent = items.title;
     let price = document.createElement("p");
-    price.textContent = `₹ ${items.quantity * items.dprice}`;
+    price.textContent = `₹ ${items.prodprice}`;
     contentdiv.append(name, price);
     itemdiv.append(imgdiv, contentdiv);
     maindiv.append(itemdiv);
   });
   var sub = 0;
   for (var i = 0; i < cart.length; i++) {
-    sub += cart[i].quantity * cart[i].dprice;
+    sub += Number(cart[i].prodprice);
   }
   let tax = Math.floor(sub * (5 / 100));
   let subtotal = document.querySelector(".subtotal");
@@ -182,10 +182,10 @@ const appenditems = (cart,maindiv) => {
           <p>Estimated Tax</p>
           <p>₹ ${tax}</p>
         </div>`;
-
+        orderprice = sub - tax;
   let totalprice = document.querySelector(".totalbill");
   totalprice.innerHTML = `<p>Total</p>
-        <p><span>INR</span>₹${sub - tax}</p>`;
+        <p><span>INR</span>₹${orderprice}</p>`;
 };
 const checkoutpage = (value) => {
   return `<div class="form">
@@ -223,16 +223,16 @@ const checkoutpage = (value) => {
 };
 
 
-const productappend = (products,bestseller,cart)=>{
+const productappend = (products,bestseller)=>{
   products.map((items) => {
     let itembox = document.createElement("div");
     itembox.setAttribute("class", "itembox");
     let itemimgdiv = document.createElement("div");
     itemimgdiv.setAttribute("class", "itemimgdiv");
-    itemimgdiv.addEventListener('click',()=>{
-      localStorage.setItem('singleitem',JSON.stringify(items));
-      window.location.href = "singleproduct.html";
-    });
+    // itemimgdiv.addEventListener('click',()=>{
+    //   localStorage.setItem('singleitem',JSON.stringify(items));
+    //   window.location.href = "singleproduct.html";
+    // });
     let itemimg = document.createElement("img");
     itemimg.src = items.url;
     itemimgdiv.append(itemimg);
@@ -254,11 +254,11 @@ const productappend = (products,bestseller,cart)=>{
     let btndiv = document.createElement("button");
     items.quantity = 1;
     btndiv.textContent = "Add to cart";
-    btndiv.addEventListener("click", () => {
-      cart.push(items);
-      localStorage.setItem("cartitems", JSON.stringify(cart));
-      console.log(items);
-    });
+    // btndiv.addEventListener("click", () => {
+    //   cart.push(items);
+    //   localStorage.setItem("cartitems", JSON.stringify(cart));
+    //   console.log(items);
+    // });
     itembox.append(itemimgdiv, itemcontentdiv,btndiv);
     bestseller.append(itembox);
   });

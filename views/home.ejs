@@ -248,7 +248,7 @@
   let bestseller = document.querySelector(".bestseller-items");
   let container = document.querySelector(".product-container");
   let products = items;
-  let cart = JSON.parse(localStorage.getItem("cartitems")) || [];
+  let cart = JSON.parse(localStorage.getItem("store"));
   products.map(({ title, reviews, desc, tprice, dprice, url }) => {
     let itembox = document.createElement("div");
     itembox.setAttribute("class", "itembox");

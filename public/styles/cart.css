@@ -60,7 +60,7 @@ td:nth-child(3) > div {
   box-sizing: border-box;
   border-radius: 4px;
 }
-td:nth-child(2) > button {
+td:nth-child(2) > form > button[type="submit"] {
   width: fit-content;
   font-size: 18px;
   padding: 5px 15px;

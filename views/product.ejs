@@ -133,7 +133,7 @@
       <div class="head">Products</div>
       <div class="content">
         <div class="sortbar">
-          <select name="" id="select" onchange="sortby()">
+          <select name="" id="select">
             <option value="--">Sort</option>
             <option value="featured">Featured</option>
             <option value="bestseller">Best Selling</option>
@@ -149,37 +149,53 @@
             <h2>View all</h2>
             <div class="catgry">
               <div class="showed">
-                <p><a href="/category=Acne-marks">Acne-marks</a></p>
-                <p><a href="/category=Alopecia">Alopecia</a></p>
-                <p><a href="/category=Anti-aging">Anti-aging</a></p>
-                <p><a href="/category=Anti-Hairfall">Anti-Hairfall</a></p>
+                <p><a href="products?category=Acne-marks">Acne-marks</a></p>
+                <p><a href="products?category=Alopecia">Alopecia</a></p>
+                <p><a href="products?category=Anti-aging">Anti-aging</a></p>
                 <p>
-                  <a href="/category=Anti-inflammatory">Anti-inflammatory</a>
+                  <a href="products?category=Anti-Hairfall">Anti-Hairfall</a>
+                </p>
+                <p>
+                  <a href="products?category=Anti-inflammatory"
+                    >Anti-inflammatory</a
+                  >
                 </p>
               </div>
               <div class="afterclick">
-                <p><a href="/category=Brightening">Brightening</a></p>
-                <p><a href="/category=Cleanser">Cleanser</a></p>
-                <p><a href="/category=Dart spots">Dart spots</a></p>
-                <p><a href="/category=Even tone">Even tone</a></p>
-                <p><a href="/category=Exfoliation">Exfoliation</a></p>
-                <p><a href="/category=Fine lines">Fine lines</a></p>
-                <p><a href="/category=Hair Growth">Hair Growth</a></p>
-                <p><a href="/category=Hydration">Hydration</a></p>
+                <p><a href="products?category=Brightening">Brightening</a></p>
+                <p><a href="products?category=Cleanser">Cleanser</a></p>
+                <p><a href="products?category=Dart spots">Dart spots</a></p>
+                <p><a href="products?category=Even tone">Even tone</a></p>
+                <p><a href="products?category=Exfoliation">Exfoliation</a></p>
+                <p><a href="products?category=Fine lines">Fine lines</a></p>
+                <p><a href="products?category=Hair Growth">Hair Growth</a></p>
+                <p><a href="products?category=Hydration">Hydration</a></p>
                 <p>
-                  <a href="/category=Hyperpigmentation">Hyperpigmentation</a>
+                  <a href="products?category=Hyperpigmentation"
+                    >Hyperpigmentation</a
+                  >
                 </p>
-                <p><a href="/category=Melasma">Melasma</a></p>
-                <p><a href="/category=Moisturization">Moisturization</a></p>
-                <p><a href="/category=Oil balance">Oil balance</a></p>
-                <p><a href="/category=Pore cleaning">Pore cleaning</a></p>
-                <p><a href="/category=Pore tightening">Pore tightening</a></p>
+                <p><a href="products?category=Melasma">Melasma</a></p>
                 <p>
-                  <a href="/category=Remove blackheads">Remove blackheads</a>
+                  <a href="products?category=Moisturization">Moisturization</a>
                 </p>
-                <p><a href="/category=Skin texture">Skin texture</a></p>
-                <p><a href="/category=Sun damage">Sun damage</a></p>
-                <p><a href="/category=Toner">Toner</a></p>
+                <p><a href="products?category=Oil balance">Oil balance</a></p>
+                <p>
+                  <a href="products?category=Pore cleaning">Pore cleaning</a>
+                </p>
+                <p>
+                  <a href="products?category=Pore tightening"
+                    >Pore tightening</a
+                  >
+                </p>
+                <p>
+                  <a href="products?category=Remove blackheads"
+                    >Remove blackheads</a
+                  >
+                </p>
+                <p><a href="products?category=Skin texture">Skin texture</a></p>
+                <p><a href="products?category=Sun damage">Sun damage</a></p>
+                <p><a href="products?category=Toner">Toner</a></p>
               </div>
               <button id="showcat">Show less</button>
             </div>
@@ -214,6 +230,8 @@
   pro["<%=i%>"].dprice = "<%=item.dprice%>";
   pro["<%=i%>"].category = "<%=item.category%>";
   pro["<%=i%>"].url = "<%=item.url%>";
+  pro["<%=i%>"].quantity = "<%=item.quantity%>";
+
   ("<%})%>");
   document.querySelector(".navbar").innerHTML = navwithouttop();
   document.querySelector("footer").innerHTML = footer();
@@ -235,21 +253,68 @@
     showcat();
   });
 
-  let cart = JSON.parse(localStorage.getItem("cartitems")) || [];
-
+  let products = items;
+  let itemcontainer = document.querySelector(".product-container");
+  itemcontainer.innerHTML = itemstemplate("Top Selling Products");
+  let maindiv = document.querySelector(".recent-products");
+  productappend(products, maindiv);
+  navfunction();
+  searchanimation();
+  let cart = JSON.parse(localStorage.getItem("store"));
   if (cart.length > 0) {
     document.getElementById("indicator").style.display = "block";
   } else {
     document.getElementById("indicator").style.display = "none";
   }
-  let products = items;
-  let itemcontainer = document.querySelector(".product-container");
-  itemcontainer.innerHTML = itemstemplate("Top Selling Products");
-  let maindiv = document.querySelector(".recent-products");
-  productappend(products, maindiv, cart);
-  navfunction();
-  searchanimation();
-
+  let selectionprod = document.getElementById("select");
+  selectionprod.addEventListener("change", () => {
+    let sort = selectionprod.value;
+    if (sort === "featured") {
+      window.location.href = "/products";
+    } else if (sort === "bestseller") {
+      let sortarr = pro.sort((a, b) => {
+        return b.reviews - a.reviews;
+      });
+      console.log(sortarr.length, sortarr);
+      appendproducts(sortarr);
+    } else if (sort === "lowrate") {
+      let sortarr = pro.sort((a, b) => {
+        return a.reviews - b.reviews;
+      });
+      console.log(sortarr.length, sortarr);
+      appendproducts(sortarr);
+    } else if (sort === "highrate") {
+      let sortarr = pro.sort((a, b) => {
+        return b.reviews - a.reviews;
+      });
+      console.log(sortarr.length, sortarr);
+      appendproducts(sortarr);
+    } else if (sort === "lowprice") {
+      let sortarr = pro.sort((a, b) => {
+        return a.dprice - b.dprice;
+      });
+      console.log(sortarr.length, sortarr);
+      appendproducts(sortarr);
+    } else if (sort === "highprice") {
+      let sortarr = pro.sort((a, b) => {
+        return b.dprice - a.dprice;
+      });
+      console.log(sortarr.length, sortarr);
+      appendproducts(sortarr);
+    } else if (sort === "atoz") {
+      var sortarr = pro.sort((a, b) => {
+        return a.title < b.title ? -1 : a.name < b.name ? 1 : 0;
+      });
+      console.log(sortarr.length, sortarr);
+      appendproducts(sortarr);
+    } else if (sort === "ztoa") {
+      let sortarr = pro.sort((a, b) => {
+        return a.title > b.title ? -1 : a.name < b.name ? 1 : 0;
+      });
+      console.log(sortarr.length, sortarr);
+      appendproducts(sortarr);
+    }
+  });
   let maindiv2 = document.querySelector(".displayitems");
   const appendproducts = (pro) => {
     maindiv2.innerHTML = null;
@@ -323,49 +388,6 @@
     }
     appendproducts(categorizeitem);
   }
-
-  const sortby = () => {
-    let sort = document.getElementById("select").value;
-    if (sort === "featured") {
-      let sortarr = products;
-      appendproducts(sortarr);
-    } else if (sort === "bestseller") {
-      let sortarr = products.sort((a, b) => {
-        return b.reviews - a.reviews;
-      });
-      appendproducts(sortarr);
-    } else if (sort === "lowrate") {
-      let sortarr = products.sort((a, b) => {
-        return a.reviews - b.reviews;
-      });
-      appendproducts(sortarr);
-    } else if (sort === "highrate") {
-      let sortarr = products.sort((a, b) => {
-        return b.reviews - a.reviews;
-      });
-      appendproducts(sortarr);
-    } else if (sort === "lowprice") {
-      let sortarr = products.sort((a, b) => {
-        return a.dprice - b.dprice;
-      });
-      appendproducts(sortarr);
-    } else if (sort === "highprice") {
-      let sortarr = products.sort((a, b) => {
-        return b.dprice - a.dprice;
-      });
-      appendproducts(sortarr);
-    } else if (sort === "atoz") {
-      var sortarr = products.sort((a, b) => {
-        return a.title < b.title ? -1 : a.name < b.name ? 1 : 0;
-      });
-      appendproducts(sortarr);
-    } else if (sort === "ztoa") {
-      let sortarr = products.sort((a, b) => {
-        return a.title > b.title ? -1 : a.name < b.name ? 1 : 0;
-      });
-      appendproducts(sortarr);
-    }
-  };
 </script>
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>

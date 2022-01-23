@@ -6,34 +6,33 @@
 #signup {
   display: grid;
   grid-template-columns: repeat(1, 100%);
-  width: 40%;
+  width: 30%;
   margin: 50px auto 100px auto;
 }
-@media screen and (max-width: 650px) {
-  #signup {
-    width: 90%;
-  }
-}
 #signup input {
-  height: 40px;
+  height: 38px;
+  width: 98%;
   border: 1px solid rgb(202, 200, 200);
   font-size: 17px;
-  padding-left: 20px;
 }
 #signup h1 {
   margin: auto;
 }
-#signup h4 {
-  line-height: 30px;
+#head {
+  line-height: 25px;
   margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 14px;
 }
 #create {
-  height: 45px;
   background-color: black;
   color: white;
   font-size: 18px;
   font-weight: bold;
   margin-top: 8%;
+}
+#btn {
+  width: 102%;
 }
 #popup {
   display: none;
@@ -44,4 +43,10 @@
 #popup a {
   text-decoration: none;
   color: rgb(184, 8, 8);
+}
+
+@media screen and (max-width: 750px) {
+  #signup {
+    width: 70%;
+  }
 }

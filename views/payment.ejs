@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment page</title>
+    <!-- Gateway CDN link -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link
       rel="shortcut icon"
       type="image"
@@ -131,16 +134,20 @@
 </html>
 <script type="module">
   import { appenditems, checkoutpage } from "/scripts/script.js";
-  let cart = JSON.parse(localStorage.getItem("cartitems"));
+  let cart = JSON.parse(localStorage.getItem("store"));
+  let orderprice = 0;
+  for (let i = 0; i < cart.length; i++) {
+    orderprice += Number(cart[i].prodprice);
+  }
+  console.log(orderprice);
   let container = document.querySelector(".container");
   container.innerHTML = checkoutpage("Complete Order");
   let maindiv = document.querySelector(".showcart");
   appenditems(cart, maindiv);
   document.querySelector(".return").addEventListener("click", () => {
-    window.location.href = "cart.html";
+    window.location.href = "/cart";
   });
   let data = JSON.parse(localStorage.getItem("orderinfo"));
-  console.log(data);
   let template = document.querySelector(".verifybox");
   template.innerHTML = `<div class="before-payment">
         <div class="info">
@@ -149,21 +156,21 @@
               <p>Contact</p>
               <p>${data.email}</p>
             </div>
-            <div><a href="checkout.html">Change</a></div>
+            <div><a href="/checkout">Change</a></div>
           </div>
           <div class="address-info">
             <div class="address">
               <p>Ship to</p>
               <p>${data.address}</p>
             </div>
-            <div><a href="checkout.html">Change</a></div>
+            <div><a href="/checkout">Change</a></div>
           </div>
           <div class="address-info">
             <div class="address">
               <p>Method</p>
               <p>Prepaid-Net banking, UPI .Free</p>
             </div>
-            <div><a href="verification.html">Change</a></div>
+            <div><a href="/verification">Change</a></div>
           </div>
         </div>
         <div class="mini-container">
@@ -204,9 +211,36 @@
       </div>`;
 
   document.querySelector(".return").addEventListener("click", () => {
-    window.location.href = "verification.html";
+    window.location.href = "/verification";
   });
-  document.querySelector(".btndiv > button").addEventListener("click", () => {
-    window.location.href = "product.html";
+  axios.post(`/order?totalprice=${orderprice}`).then((info) => {
+    console.log("info", info);
+    var options = {
+      key: "rzp_test_U0P80qGYEdLMh4", // Enter the Key ID generated from the Dashboard
+      amount: info.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: "Beminimalist Clone",
+      description: "Test Product Transaction",
+      image:
+        "https://media-exp1.licdn.com/dms/image/C4D0BAQFYlWONcxQ9AQ/company-logo_200_200/0/1610263700629?e=2159024400&v=beta&t=vWiMSI2NRcfxJFlMNKDkzFi3UpLKVhgcyHgM96IKWuU",
+      order_id: info.data.id,
+      callback_url: "/ordercompleted", //This is a sample Order ID. Pass the `id` obtained in the previous step
+      prefill: {
+        name: "Avish Kumar",
+        email: "Avish.kumar@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new Razorpay(options);
+    document.querySelector(".btndiv > button").onclick = function (e) {
+      rzp1.open();
+      e.preventDefault();
+    };
   });
 </script>

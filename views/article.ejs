@@ -21,8 +21,8 @@
     crossorigin="anonymous"
     />
     <!-- stylesheet  -->
-    <link rel="stylesheet" href="components/template.css">
-    <link rel="stylesheet" href="styles/article.css">
+    <link rel="stylesheet" href="/styles/template.css">
+    <link rel="stylesheet" href="/styles/article.css">
     <title>Document</title>
 </head>
 
@@ -264,14 +264,17 @@
     document.querySelector('footer').innerHTML = footer();
     navfunction();
     searchanimation();
-    let page = JSON.parse(localStorage.getItem('single_Data'));
-    console.log(page);
+    let article = {};
+  article.id = "<%=blogs._id%>";
+  article.title = "<%=blogs.title%>";
+  article.category = "<%=blogs.category%>";
+  article.url = "<%=blogs.url%>";
     let blogdiv = document.querySelector('.upmid');
     blogdiv.innerHTML = `<p class="auth">Medically reviewed by <u>Minimalist Health Specialist</u> - Written by Viddhi Patel
                 (Journalist) on 19th Feb 2021</p>
-            <div class="title">${page.title}</div>
+            <div class="title">${article.title}</div>
             <div class="img">
-                <img src="${page.url}" alt="">
+                <img src="${article.url}" alt="">
             </div>`
     //selectors
     let ref=document.querySelector('.ref');
@@ -287,5 +290,6 @@
         if(count%2!=0) refnum.style.display='block'
         else refnum.style.display='none'
     }
+
 
 </script>

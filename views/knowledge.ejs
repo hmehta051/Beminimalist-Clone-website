@@ -49,25 +49,40 @@
   } from "/scripts/script.js";
   document.querySelector(".navbar").innerHTML = navwithouttop();
   document.querySelector("footer").innerHTML = footer();
-
-  import kdata from "/scripts/data.js";
-
-  let kdataarr = kdata();
-  kdataarr = JSON.parse(kdataarr);
-  let guideddata = kdataarr.slice(19, 25);
   import append from "/scripts/show.js";
   let guided = document.getElementById("guidesimg");
 
-  append(guideddata, guided);
-
   let skincaredata = document.getElementById("skincare");
-  append(kdataarr, skincaredata);
 
   document.getElementById("guidbtn").addEventListener("click", () => {
-    window.location.href = "viewmore.html";
+    window.location.href = "/viewmore";
   });
   navfunction();
   searchanimation();
+
+  let blog = [];
+  ("<% blogs.forEach((item,i)=>{%>");
+  ("<% if (i < 19) { %>");
+  blog.push({});
+  blog["<%=i%>"].id = "<%=item._id%>";
+  blog["<%=i%>"].title = "<%=item.title%>";
+  blog["<%=i%>"].category = "<%=item.category%>";
+  blog["<%=i%>"].url = "<%=item.url%>";
+  ("<%}%>");
+  ("<%})%>");
+  append(blog, guided);
+  console.log(blog);
+  let blog2 = [];
+  ("<% blogs.forEach((items,index)=>{%>");
+  ("<% if (index < 6) { %>");
+  blog2.push({});
+  blog2["<%=index%>"].id = "<%=items._id%>";
+  blog2["<%=index%>"].title = "<%=items.title%>";
+  blog2["<%=index%>"].category = "<%=items.category%>";
+  blog2["<%=index%>"].url = "<%=items.url%>";
+  ("<%}%>");
+  ("<%})%>");
+  append(blog2, skincaredata);
 </script>
 <!-- aos script  -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

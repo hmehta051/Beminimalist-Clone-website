@@ -15,7 +15,7 @@ async function append(data,location){
         p.addEventListener("click",()=>{
 
             localStorage.setItem("single_Data",JSON.stringify(el));
-            window.location.href = "article.html"
+            window.location.href = ""
 
         })
         div.append(img,h2,p);
